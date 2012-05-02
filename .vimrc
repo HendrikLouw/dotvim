@@ -1,69 +1,51 @@
-filetype on  " Automatically detect file types.
-set nocompatible  " We don't want vi compatibility.
- 
-" Add recently accessed projects menu (project plugin)
-set viminfo ^=!
-  
-" Minibuffer Explorer Settings
-  let g:miniBufExplMapWindowNavVim = 1
-  let g:miniBufExplMapWindowNavArrows = 1
-  let g:miniBufExplMapCTabSwitchBufs = 1
-  let g:miniBufExplModSelTarget = 1
-  
-" alt+n or alt+p to navigate between entries in QuickFix
-  map <silent> <m-p> :cp <cr>
-  map <silent> <m-n> :cn <cr>
-   
-"Change which file opens after executing :Rails command
-let g:rails_default_file='config/database.yml'
-syntax enable
+"  Filetypes
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
 
-
-"Optional settings
-set cf  " Enable error files & error jumping.
-set clipboard+=unnamed  " Yanks go on clipboard instead.
-set history=256  " Number of things to remember in history.
-set autowrite  " Writes on make/shell commands
-set ruler  " Ruler on
-set nu  " Line numbers on
-set nowrap  " Line wrapping off
-set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
-
-
-" Formatting (some of these are for coding in C and C++)
-set ts=2  " Tabs are 2 spaces
-set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
-set nocp incsearch
-set cinoptions=:0,p0,t0
-set cinwords=if,else,while,do,for,switch,case
-set formatoptions=tcqr
-set cindent
-set autoindent
-set smarttab
+" Tabs/spaces
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 
+" Powerline/statusline
+"let g:Powerline_symbols = 'fancy'
+set laststatus=2
+"set encoding=utf-8
 
-" Visual
- set showmatch  " Show matching brackets.
- set mat=5  " Bracket blinking.
-" set list
-" Show $ at end of line and trailing space as ~
-"set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
-set novisualbell  " No blinking .
-set noerrorbells  " No noise.
-set laststatus=2  " Always show status line.
-" gvim specific
-set mousehide  " Hide mouse after chars typed
-set mouse=a  " Mouse in all modes
+" Show line numbers
+set number
+
+" Choose default syntax highlighting
+color railscasts
+
+" Key bindings
+
+" Tab bindings
+map <C-t>n :tabnew<cr>
+map <C-t>q :tabc<cr>
+map <C-t>l :tabn<cr>
+map <C-t>h :tabp<cr>
+
+" NERDTree
+map <C-n> :NERDTree /home/hendrik/work/projects/current<cr>
+
+" Open files with <leader>f
+map <leader>f :CommandTFlush<cr>\|:CommandT /home/hendrik/work/projects/current<cr>
+
+if has("gui_running") 
+  set guioptions=aiA " Disable toolbar, menu bar, scroll bars 
+  set gfn="ProggyClean"
+endif " has("gui_running") 
 
 
-"ruby
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-""improve autocomplete menu color
-highlight Pmenu ctermbg=238 gui=bold
+function! Fullscreen()
+	silent !wmctrl -r :ACTIVE: -b add,fullscreen
+endfunction
+
+map <silent> <F11> :call Fullscreen()<CR>
+
 
 
